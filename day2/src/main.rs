@@ -6,7 +6,7 @@ fn mapper(course: &[&str]) -> (i32, i32) {
         "forward" => (num, 0),
         "up" => (0, -num),
         "down" => (0, num),
-        _ => panic!("Unknown instruction")
+        _ => panic!("Unknown instruction"),
     }
 }
 
@@ -20,15 +20,15 @@ fn part1(input: &[Vec<&str>]) -> i32 {
 }
 
 fn part2(input: &[Vec<&str>]) -> i32 {
-    let compute = input
-        .iter()
-        .map(|course| mapper(&course[..]))
-        .fold((0, 0, 0), |(hor, dep, aim), (x, y)| {
+    let compute = input.iter().map(|course| mapper(&course[..])).fold(
+        (0, 0, 0),
+        |(hor, dep, aim), (x, y)| {
             if y == 0 {
                 return (hor + x, dep + aim * x, aim);
             }
             (hor, dep, aim + y)
-        });
+        },
+    );
 
     compute.0 * compute.1
 }
