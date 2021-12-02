@@ -1,8 +1,8 @@
 use std::time::Instant;
 
-fn extract(course: (&str, &str)) -> (i32, i32) {
-    let num: i32 = course.1.parse().unwrap();
-    match course.0 {
+fn extract(command: (&str, &str)) -> (i32, i32) {
+    let num: i32 = command.1.parse().unwrap();
+    match command.0 {
         "forward" => (num, 0),
         "up" => (0, -num),
         "down" => (0, num),
