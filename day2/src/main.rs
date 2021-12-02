@@ -1,6 +1,6 @@
 use std::time::Instant;
 
-fn mapper(course: (&str, &str)) -> (i32, i32) {
+fn extract(course: (&str, &str)) -> (i32, i32) {
     let num: i32 = course.1.parse().unwrap();
     match course.0 {
         "forward" => (num, 0),
@@ -10,22 +10,20 @@ fn mapper(course: (&str, &str)) -> (i32, i32) {
     }
 }
 
-fn part1(input: &[(&str, &str)]) -> i32 {
+fn part1(input: &[(i32, i32)]) -> i32 {
     let compute = input
         .iter()
-        .map(|course| mapper(*course))
         .fold((0, 0), |(hor, dep), (x, y)| (hor + x, dep + y));
 
     compute.0 * compute.1
 }
 
-fn part2(input: &[(&str, &str)]) -> i32 {
+fn part2(input: &[(i32, i32)]) -> i32 {
     let compute =
         input
             .iter()
-            .map(|course| mapper(*course))
             .fold((0, 0, 0), |(hor, dep, aim), (x, y)| {
-                if y == 0 {
+                if *y == 0 {
                     return (hor + x, dep + aim * x, aim);
                 }
                 (hor, dep, aim + y)
@@ -38,6 +36,7 @@ fn main() {
     let input: Vec<_> = include_str!("input.txt")
         .lines()
         .map(|line| line.split_once(' ').unwrap())
+        .map(|line| extract(line))
         .collect();
 
     let it = Instant::now();
